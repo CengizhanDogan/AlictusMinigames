@@ -11,6 +11,8 @@ public class Ring_DragObjects : MonoBehaviour
     [SerializeField] private Camera cam;
     private RaycastHit hit;
     private GameObject selectedObject;
+    public GameObject moveObject;
+
 
     private void Update()
     {
@@ -32,8 +34,14 @@ public class Ring_DragObjects : MonoBehaviour
                     selectedObject = hit.transform.gameObject;
                     if (selectedObject.TryGetComponent(out Ring_ObjectBehaviour obj))
                     {
-                        obj.selected = true;
-                        StartCoroutine(obj.SelectedRotation(1f));
+                        if (obj.myBody.containingRings[obj.myBody.containingRings.Count - 1] == selectedObject)
+                        {
+                            obj.GetSelected(this);
+                        }
+                        else
+                        {
+                            selectedObject = null;
+                        }
                     }
                 }
             }
@@ -47,21 +55,29 @@ public class Ring_DragObjects : MonoBehaviour
             if (selectedObject.TryGetComponent(out Ring_ObjectBehaviour obj))
             {
                 obj.selected = false;
-                StartCoroutine(obj.GetFirstPlace(1f));
+                if (!obj.trigger.canPlace)
+                {
+                    obj.GetFirstPlace();
+                }
+                else
+                {
+                    obj.GetPlaced();
+                }
             }
             selectedObject = null;
+            moveObject = null;
         }
     }
     private void MoveObject()
     {
-        if (selectedObject)
+        if (moveObject)
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 100, inputLayer))
             {
                 Vector3 movePosition = hit.point + Vector3.up * inputHeightValue;
 
-                selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, movePosition, Time.fixedDeltaTime * 24f);
+                selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, movePosition, Time.fixedDeltaTime * 2f);
             }
         }
     }

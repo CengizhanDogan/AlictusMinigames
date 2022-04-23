@@ -6,8 +6,6 @@ public class RingSpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> rings = new List<GameObject>();
 
-    public List<GameObject> twoRings = new List<GameObject>();
-
     private BodyList bodyList;
 
     private GameObject ringOne;
@@ -42,7 +40,14 @@ public class RingSpawner : MonoBehaviour
 
     private void SpawnRings()
     {
-        twoRings.Add(ringOne); twoRings.Add(ringTwo);
+        //Creates a list that holds 2 types of rings that can be spawned.
+
+        List<GameObject> twoRings = new List<GameObject>();
+
+        twoRings.Add(ringOne);
+        twoRings.Add(ringTwo);
+        
+        //
 
         for (int i = 0; i < 6; i++)
         {
@@ -64,14 +69,21 @@ public class RingSpawner : MonoBehaviour
     {
         _randomBody.containingRings.Add(_ringClone);
         _randomBody.CheckList();
+
+        //There can't be 4 rings in a body. Code beneath removes the body with 3 rings from the spawn list.
+
         if (_randomBody.containingRings.Count > 2)
         {
             bodyList.bodies.Remove(_randomBody);
         }
+
+        //
     }
 
     private void CheckRingCount(GameObject ring, List<GameObject> _twoRings)
     {
+        //If 3 of same colored ring is created, it is removed from the list. In this way, there are no 4 or more rings of the same color.
+
         if (ring == ringOne)
         {
             ringOneCount++;
@@ -88,6 +100,8 @@ public class RingSpawner : MonoBehaviour
                 _twoRings.Remove(ringTwo);
             }
         }
+
+        //
     }
 
     private Vector3 SpawnPos(BodyBehaviour _randomBody)
@@ -102,6 +116,9 @@ public class RingSpawner : MonoBehaviour
         BodyBehaviour randomBody = bodyList.bodies[Random.Range(0, bodyList.bodies.Count)];
 
         int countInt = 0;
+
+        //If the rings of the same color are at the bottom of the 3 bodies, the game cannot be solved.
+        //The foreach loop down below prevents this.
 
         foreach (var body in bodyList.bodies)
         {
@@ -120,6 +137,8 @@ public class RingSpawner : MonoBehaviour
                 }
             }
         }
+
+        //
 
         return randomBody;
     }

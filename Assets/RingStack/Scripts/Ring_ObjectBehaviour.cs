@@ -24,7 +24,7 @@ public class Ring_ObjectBehaviour : MonoBehaviour
         trigger = GetComponent<ObjectTrigger>();
         myColl = GetComponent<Collider>();
     }
-    public void GetFirstPlace()
+    public void GetStartPosition()
     {
         Vector3 bodyPos = myBody.GetComponent<Collider>().bounds.center;
         myColl.enabled = false;
@@ -66,12 +66,16 @@ public class Ring_ObjectBehaviour : MonoBehaviour
 
         Vector3 destination = Destination;
 
+        //Ring changes bodies 
+
         myBody.containingRings.Remove(gameObject);
         futureBody.containingRings.Add(gameObject);
         myBody = futureBody;
         futureBody = null;
 
         myBody.CheckList();
+
+        //
 
         transform.DOMove(bodyPos, 0.2f).SetEase(Ease.Linear).OnComplete(() =>
         {
@@ -88,6 +92,7 @@ public class Ring_ObjectBehaviour : MonoBehaviour
         get
         {
             Vector3 place = Vector3.zero;
+
             if (futureBody.containingRings.Count > 0)
             {
                 GameObject lastRing = futureBody.containingRings[futureBody.containingRings.Count - 1];

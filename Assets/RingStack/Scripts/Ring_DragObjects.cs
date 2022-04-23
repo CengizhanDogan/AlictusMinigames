@@ -34,6 +34,7 @@ public class Ring_DragObjects : MonoBehaviour
                     selectedObject = hit.transform.gameObject;
                     if (selectedObject.TryGetComponent(out Ring_ObjectBehaviour obj))
                     {
+                        //If the clicked ring is beneath another ring it can't be moved.
                         if (obj.myBody.containingRings[obj.myBody.containingRings.Count - 1] == selectedObject)
                         {
                             obj.GetSelected(this);
@@ -42,6 +43,7 @@ public class Ring_DragObjects : MonoBehaviour
                         {
                             selectedObject = null;
                         }
+                        //
                     }
                 }
             }
@@ -55,14 +57,16 @@ public class Ring_DragObjects : MonoBehaviour
             if (selectedObject.TryGetComponent(out Ring_ObjectBehaviour obj))
             {
                 obj.selected = false;
+                //If or not can be placed on a new body.
                 if (!obj.trigger.canPlace)
                 {
-                    obj.GetFirstPlace();
+                    obj.GetStartPosition();
                 }
                 else
                 {
                     obj.GetPlaced();
                 }
+                //
             }
             selectedObject = null;
             moveObject = null;
@@ -77,7 +81,10 @@ public class Ring_DragObjects : MonoBehaviour
             {
                 Vector3 movePosition = hit.point + Vector3.up * inputHeightValue;
 
-                selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, movePosition, Time.fixedDeltaTime * 2f);
+                if (selectedObject)
+                {
+                    selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, movePosition, Time.fixedDeltaTime * 2f);
+                }
             }
         }
     }

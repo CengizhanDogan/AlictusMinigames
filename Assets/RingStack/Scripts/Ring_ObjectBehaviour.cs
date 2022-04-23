@@ -13,9 +13,9 @@ public class Ring_ObjectBehaviour : MonoBehaviour
 
     private Vector3 startPos;
 
-    public enum Color { Blue, Green, Yellow, Pink };
+    public enum RingColor { Blue, Green, Yellow, Pink };
 
-    public Color color;
+    public RingColor color;
 
     [HideInInspector] public bool selected;
     void Start()
@@ -70,6 +70,8 @@ public class Ring_ObjectBehaviour : MonoBehaviour
         futureBody.containingRings.Add(gameObject);
         myBody = futureBody;
         futureBody = null;
+
+        myBody.CheckList();
 
         transform.DOMove(bodyPos, 0.2f).SetEase(Ease.Linear).OnComplete(() =>
         {

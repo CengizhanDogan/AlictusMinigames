@@ -63,6 +63,7 @@ public class RingSpawner : MonoBehaviour
     private void AddToList(BodyBehaviour _randomBody, GameObject _ringClone)
     {
         _randomBody.containingRings.Add(_ringClone);
+        _randomBody.CheckList();
         if (_randomBody.containingRings.Count > 2)
         {
             bodyList.bodies.Remove(_randomBody);

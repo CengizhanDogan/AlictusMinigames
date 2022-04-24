@@ -27,8 +27,8 @@ public class UVLight : MonoBehaviour
         Vector2 pixelUV = hit.textureCoord;
         pixelUV.x *= texture.width;
         pixelUV.y *= texture.height;
-
-        tex.SetPixel((int)pixelUV.x, (int)pixelUV.y, Color.white);
+        Color[] colors = new Color[texture.width * texture.height];
+        tex.SetPixels((int)pixelUV.x, (int)pixelUV.y, texture.width, texture.height, colors);
         tex.Apply();
     }
 }

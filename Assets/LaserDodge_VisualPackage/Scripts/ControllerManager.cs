@@ -32,4 +32,14 @@ public class ControllerManager : MonoBehaviour
             controller.canFollowed = true;
         }
     }
+
+    internal void DisableControllers()
+    {
+        foreach (var controller in controllers)
+        {
+            controller.transform.DOScale(Vector3.zero, 0.25f);
+
+            controller.canFollowed = false;
+        }
+    }
 }

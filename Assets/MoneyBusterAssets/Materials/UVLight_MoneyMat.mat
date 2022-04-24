@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SplatTex:
-        m_Texture: {fileID: 2800000, guid: 452febb2b13e6834babd54fc76511de4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0361c149ad69abe4fbd8b6a61280b90c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture1:

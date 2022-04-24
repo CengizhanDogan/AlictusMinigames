@@ -4,23 +4,24 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
     private ControllerManager controllerManager;
     private RagdollController ragdollController;
     private void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
         controllerManager = GetComponentInChildren<ControllerManager>();
         ragdollController = GetComponentInChildren<RagdollController>();
     }
-    public void OnTriggerEnter(Collider other)
+    public void StartControl(PlayerMovement _playerMovement)
     {
-        if (other.tag == "Laser")
-        {
-            Destroy(playerMovement.rb);
-            playerMovement.forwardSpeed = 1f;
-            ragdollController.RagdollControl(true);
-            controllerManager.EnableControllers();
-        }
+        _playerMovement.forwardSpeed = 1f;
+        ragdollController.RagdollControl(true);
+        controllerManager.EnableControllers();
+    }
+    public void StopControl(PlayerMovement _playerMovement)
+    {
+        _playerMovement.forwardSpeed = 3f;
+        ragdollController.ResetTransform();
+        ragdollController.RagdollControl(false);
+        controllerManager.DisableControllers();
     }
 }

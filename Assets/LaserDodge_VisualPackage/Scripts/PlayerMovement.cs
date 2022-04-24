@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (rb)
             {
-                rb.transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
+                rb.transform.Translate(Vector3.forward * -forwardSpeed * Time.deltaTime);
             }
             else
             {

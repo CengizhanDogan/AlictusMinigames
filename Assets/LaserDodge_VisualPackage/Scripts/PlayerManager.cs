@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
     public void StopControl(PlayerMovement _playerMovement)
     {
         _playerMovement.forwardSpeed = 3f;
-        ragdollController.ResetTransform();
+        //ragdollController.ResetTransform();
         ragdollController.RagdollControl(false);
         controllerManager.DisableControllers();
     }
